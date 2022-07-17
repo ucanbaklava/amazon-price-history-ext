@@ -1,3 +1,5 @@
+const notfication = document.getElementById("notification")
+
 window.onload = async function () {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   let ctx = document.getElementById("line-chart").getContext("2d");
@@ -29,12 +31,15 @@ function showProductData(ctx, url) {
   const re = new RegExp("(?:[/dp/]|$)([A-Z0-9]{10})");
   const asinResults = url.match(re);
 
+  notfication.innerHTML = ""
+
   fetch("https://mezarci.ucanbaklava.com/products/" + asinResults[1]) // 'data/data.json' in my case
     .then(function (response) {
       if (response.status !== 200) {
         console.log(
           "Looks like there was a problem. Status Code: " + response.status
         );
+        notfication.innerHTML = "<p>Urun Bulunamadi</p>"
         return;
       }
 
