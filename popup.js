@@ -5,7 +5,7 @@ window.onload = async function () {
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
     files: ["popup.js"],
-    function: setPageBackgroundColor(ctx, tab.url),
+    function: showProductData(ctx, tab.url),
   });
 };
 
@@ -25,8 +25,7 @@ function strToDate(dtStr) {
   ));
 }
 
-function setPageBackgroundColor(ctx, url) {
-  // console.log("asdandadnm")
+function showProductData(ctx, url) {
   const re = new RegExp("(?:[/dp/]|$)([A-Z0-9]{10})");
   const asinResults = url.match(re);
 

@@ -1,10 +1,3 @@
-let color = "#3aa757";
-
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set({ color });
-  console.log("Default background color set to %cgreen", `color: ${color}`);
-});
-
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (changeInfo.status === "complete") {
     chrome.scripting.executeScript({
@@ -64,13 +57,7 @@ function getProduct() {
   const specsQuerySelector = document.querySelectorAll(
     "#productDetails_techSpec_section_1>tbody>tr"
   );
-  const wholePrice = document
-    .querySelector(".a-price-whole, br + .a-color-base")
-    .innerText.replace(/\n/g, "")
-    .replace(",", "."); //tp_price_block_total_price_ww
-  const decimalPrice = document
-    .querySelector(".a-price-whole, br + .a-color-base")
-    .nextSibling.innerText.replace(/\n/g, "");
+
   const aboutQuerySelector = document.querySelectorAll(
     ".a-unordered-list.a-vertical.a-spacing-mini>li"
   );
