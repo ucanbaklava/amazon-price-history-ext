@@ -15,7 +15,7 @@
   ],
  
   "host_permissions": ["https://www.amazon.com.tr/*",  "https://mezarci.ucanbaklava.com/product"],
-  "permissions": ["storage", "activeTab", "scripting"],
+  "permissions": ["activeTab", "scripting", "declarativeContent"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
