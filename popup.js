@@ -1,4 +1,4 @@
-const notfication = document.getElementById("notification")
+const notfication = document.getElementById("notification");
 
 window.onload = async function () {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -31,7 +31,7 @@ function showProductData(ctx, url) {
   const re = new RegExp("(?:[/dp/]|$)([A-Z0-9]{10})");
   const asinResults = url.match(re);
 
-  notfication.innerHTML = ""
+  notfication.innerHTML = "";
 
   fetch("https://mezarci.ucanbaklava.com/products/" + asinResults[1]) // 'data/data.json' in my case
     .then(function (response) {
@@ -39,7 +39,7 @@ function showProductData(ctx, url) {
         console.log(
           "Looks like there was a problem. Status Code: " + response.status
         );
-        notfication.innerHTML = "<p>Urun Bulunamadi</p>"
+        notfication.innerHTML = "<p>Urun Bulunamadi</p>";
         return;
       }
 
@@ -74,77 +74,40 @@ function showProductData(ctx, url) {
               y: {
                 title: {
                   display: true,
-                  text: 'Fiyat'
+                  text: "Fiyat",
                 },
-                  ticks: {
-                      // Include a dollar sign in the ticks
-                      callback: function(value, index, ticks) {
-                          return value;
-                      }
-                  }
+                ticks: {
+                  // Include a dollar sign in the ticks
+                  callback: function (value, index, ticks) {
+                    return value;
+                  },
+                },
               },
               x: {
                 title: {
                   display: true,
-                  text: 'Tarih'
+                  text: "Tarih",
                 },
                 ticks: {
                   maxRotation: 90,
-                  minRotation: 90,                  
-                  callback: function(value) { 
-                    const newVal = this.getLabelForValue(value)
-                    const [day, month, year] = newVal.toString().split(" ")[0].split("-")
+                  minRotation: 90,
+                  callback: function (value) {
+                    const newVal = this.getLabelForValue(value);
+                    const [day, month, year] = newVal
+                      .toString()
+                      .split(" ")[0]
+                      .split("-");
                     const date = new Date(+year, month - 1, +day);
-                    console.log(date)
-                      return date.toLocaleDateString("tr-TR")
+                    console.log(date);
+                    return date.toLocaleDateString("tr-TR");
                   },
+                },
               },
-              },              
-             
-          },
-            onAnimationComplete: function () {
-              var ctx = this.chart.ctx;
-              ctx.font = Chart.helpers.fontString(
-                Chart.defaults.global.defaultFontSize,
-                "normal",
-                Chart.defaults.global.defaultFontFamily
-              );
-              ctx.fillStyle = this.chart.config.options.defaultFontColor;
-              ctx.textAlign = "center";
-              ctx.textBaseline = "bottom";
-              this.data.datasets.forEach(function (dataset) {
-                for (var i = 0; i < dataset.data.length; i++) {
-                  var model =
-                    dataset._meta[Object.keys(dataset._meta)[0]].data[i]._model;
-                  ctx.fillText(dataset.data[i], model.x, model.y - 5);
-                }
-              });
             },
             plugins: {
               title: {
                 display: true,
                 text: data.name + size + color,
-              },
-              afterDraw: (ctx) => {
-                let xAxis = chart.scales["x-axis-0"];
-                let yAxis = chart.scales["y-axis-0"];
-
-                ctx.save();
-                ctx.textAlign = "center";
-                ctx.font = "12px Arial";
-                ctx.fillStyle = "white";
-                ctx.textAlign = "left";
-                ctx.fillText(
-                  "En Düşük = " + lowest,
-                  xAxis.left + 5,
-                  yAxis.top + 5
-                );
-                ctx.fillText(
-                  "En Yüksek = " + highest,
-                  xAxis.left + 5,
-                  yAxis.top + 18
-                );
-                ctx.restore();
               },
             },
             parsing: {
