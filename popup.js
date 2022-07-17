@@ -65,7 +65,38 @@ function showProductData(ctx, url) {
             ],
           },
           options: {
-            scales: {},
+            scales: {
+              y: {
+                title: {
+                  display: true,
+                  text: 'Fiyat'
+                },
+                  ticks: {
+                      // Include a dollar sign in the ticks
+                      callback: function(value, index, ticks) {
+                          return value;
+                      }
+                  }
+              },
+              x: {
+                title: {
+                  display: true,
+                  text: 'Tarih'
+                },
+                ticks: {
+                  maxRotation: 90,
+                  minRotation: 90,                  
+                  callback: function(value) { 
+                    const newVal = this.getLabelForValue(value)
+                    const [day, month, year] = newVal.toString().split(" ")[0].split("-")
+                    const date = new Date(+year, month - 1, +day);
+                    console.log(date)
+                      return date.toLocaleDateString("tr-TR")
+                  },
+              },
+              },              
+             
+          },
             onAnimationComplete: function () {
               var ctx = this.chart.ctx;
               ctx.font = Chart.helpers.fontString(
