@@ -16,7 +16,7 @@ chrome.runtime.onInstalled.addListener(() => {
 
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-  if (changeInfo.status === "complete") {
+  if (changeInfo.status === "complete" && tab.url.includes("amazon.com.tr")) {
     chrome.scripting.executeScript({
       target: { tabId: tabId },
       function: getProduct,
