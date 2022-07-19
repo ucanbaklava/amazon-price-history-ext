@@ -1,6 +1,17 @@
 const notfication = document.getElementById("notification");
 const thumb = document.getElementById("thumb");
 const pricehistory = document.getElementById("pricehistory");
+let thumbnail
+
+
+document.addEventListener('DOMContentLoaded',function(){
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {func: "thumbnail"}, function(response) {
+            thumbnail = response
+        });
+    });
+  });
+
 
 
 window.onload = async function () {
@@ -48,10 +59,7 @@ function showProductData(ctx, url) {
 
       response.json().then(function (data) {
         console.log(data);
-        if (data.images[0] !== undefined) {
-          src = data.images[0].replace("US40", "US200")
-          thumb.src = src
-        }
+        thumb.src = thumbnail
         const lowest = Math.min(...data.priceInfo.map((o) => o.price));
         const highest = Math.max(...data.priceInfo.map((o) => o.price));
 

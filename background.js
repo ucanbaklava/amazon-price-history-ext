@@ -1,5 +1,6 @@
 chrome.action.disable();
 
+
 chrome.runtime.onInstalled.addListener(() => {
   chrome.declarativeContent.onPageChanged.removeRules(() => {
     chrome.declarativeContent.onPageChanged.addRules([{
@@ -13,6 +14,10 @@ chrome.runtime.onInstalled.addListener(() => {
     }]);
   });
 });
+
+
+
+
 
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {

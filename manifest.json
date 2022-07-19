@@ -10,7 +10,7 @@
   "content_scripts": [
     {
       "matches": ["https://www.amazon.com.tr/*"],
-      "js": ["chart.js", "chartjs-adapter.js"]
+      "js": ["chart.js", "chartjs-adapter.js", "utils.js"]
     }
   ],
  
