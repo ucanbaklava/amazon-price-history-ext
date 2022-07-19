@@ -1,4 +1,7 @@
 const notfication = document.getElementById("notification");
+const thumb = document.getElementById("thumb");
+const pricehistory = document.getElementById("pricehistory");
+
 
 window.onload = async function () {
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -45,8 +48,14 @@ function showProductData(ctx, url) {
 
       response.json().then(function (data) {
         console.log(data);
+        if (data.images[0] !== undefined) {
+          src = data.images[0].replace("US40", "US200")
+          thumb.src = src
+        }
         const lowest = Math.min(...data.priceInfo.map((o) => o.price));
         const highest = Math.max(...data.priceInfo.map((o) => o.price));
+
+        pricehistory.innerHTML = `<span style="color:green">En Dusuk: ${lowest} TL</span> <span>En Yuksek: ${highest} TL</span>`;
         let size = "";
         let color = "";
         if (data.extraInfo !== null) {
